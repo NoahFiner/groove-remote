@@ -19,7 +19,7 @@ if(__name__ == "__main__"):
     print("""HOW TO USE:
 This simply sets up config.json with a hash of updater.py and more.
 At the end, it also runs an equivalent of the following with GitPython:
-$ git add -A
+$ git add .
 $ git commit -m "Update to version <new version>"
 $ git push origin master
 
