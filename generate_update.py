@@ -2,15 +2,47 @@ import json
 import time
 import hashlib
 from git import Repo
+from pathlib import Path
 
-def get_md5(filename):
+
+# Returns a list of all non-hidden, non virtualenv, file paths
+def get_paths():
+    result = list()
+
+    p = Path('.')
+    # Create a list of all directories
+    directories = list(p.glob("**"))
+    # Now convert these to strings
+    directories = list(map(lambda x: str(x), directories))
+    # Now remove any that start with . (hidden directories)
+    # and any that start with env (our virtualenv)
+    directories = list(filter(lambda x: x[0] != '.' and x[0:3] != 'env',
+                                                directories))
+
+    # Add the current directory to directories
+    directories.append('.')
+    for directory in directories:
+        p = Path(directory)
+        # Select all strings in this path
+        files = list(p.glob('*.*'))
+        # Now convert these to strings again
+        files = list(map(lambda x: str(x), files))
+        # Now remove any that start with . (hidden files)
+        files = list(filter(lambda x: x[0] != '.', files))
+        # Now append
+        result.extend(files)
+    return result
+
+# Gets an MD5 hash of all files in the tree
+def get_md5():
     md5 = hashlib.md5()
-    file = open(filename, "r")
-    while True:
-        data = file.read(32)
-        if not data:
-            break
-        md5.update(data.encode("utf-8"))
+    for filename in get_paths():
+        file = open(filename, "r")
+        while True:
+            data = file.read(32)
+            if not data:
+                break
+            md5.update(data.encode("utf-8"))
     return md5.hexdigest()
 
 
@@ -42,7 +74,7 @@ files, I stuck with this.
 
     config["notes"] = input("Add any release notes: ")
     config["date"] = int(time.time())
-    config["hash"] = get_md5("updater.py")
+    config["hash"] = get_md5()
     
     file = open("config.json", "w")
     json.dump(config, file)
