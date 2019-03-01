@@ -16,9 +16,9 @@ def get_md5(filename):
 if(__name__ == "__main__"):
     config = dict()
     print("""HOW TO USE:
-This program assumes you've already written a new program to groove_program.py under run().
+This program assumes you've already written a new program to update.py.
 This simply sets up config.json.
-You are responsible for pushing this release to https://github.com/NoahFiner/Groove-Challenge-Git.git.
+You are responsible for pushing this release to https://github.com/NoahFiner/groove-remote.git.
     """)
 
     config["version"] = input("Input a version: ")
@@ -28,7 +28,7 @@ You are responsible for pushing this release to https://github.com/NoahFiner/Gro
 
     config["notes"] = input("Add any release notes: ")
     config["date"] = int(time.time())
-    config["hash"] = get_md5("groove_program.py")
+    config["hash"] = get_md5("updater.py")
     
     file = open("config.json", "w")
     json.dump(config, file)
