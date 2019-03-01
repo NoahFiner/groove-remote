@@ -105,7 +105,7 @@ Would you like to update? (y/n):""".format(
         for elem in self.get_paths(self.get_directories()):
             print(elem)
             r = requests.get("https://raw.githubusercontent.com/NoahFiner/groove-remote/{0}/{1}".format(self.commit, elem))
-            write_to_file(elem, r.text)
+            self.write_to_file(elem, r.text)
 
         print("Checking MD5 hash with config...", end='')
         if(self.get_md5(__file__)
@@ -282,15 +282,6 @@ def special_function():
     print("Hello from version 1.0!")
 
 if __name__ == "__main__":
-    updater = Updater()
-
-    if(updater.should_run_current_version()):
-        print("Running with version {0}".format(
-                                            updater.local_config["version"]))
-        
-        special_function()
-    else:
-        updater.update()
     updater = Updater()
 
     if(updater.should_run_current_version()):
