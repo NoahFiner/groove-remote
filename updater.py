@@ -78,9 +78,10 @@ Would you like to update? (y/n):""".format(
         return result
 
     def write_to_file(self, filename, text):
-        file = open(filename, "w")
-        file.write(text)
-        file.close()
+        if filename is not "README.md":
+            file = open(filename, "w")
+            file.write(text)
+            file.close()
 
     # Updates the module 
     def update(self):
@@ -89,17 +90,17 @@ Would you like to update? (y/n):""".format(
         r = requests.get("https://raw.githubusercontent.com/NoahFiner/groove-remote/{0}/updater.py".format(self.commit))
         print("done!")
 
-        # Write that to the current updater.py
-        print("Updating to "+self.remote_config["version"]+"...", end='')
-        file = open(__file__, "w")
-        file.write(r.text)
-        file.close()
+        # # Write that to the current updater.py
+        # print("Updating to "+self.remote_config["version"]+"...", end='')
+        # file = open(__file__, "w")
+        # file.write(r.text)
+        # file.close()
 
-        # Update the current config.json
-        file = open("config.json", "w")
-        file.write(json.dumps(self.remote_config))
-        file.close()
-        print("done!")
+        # # Update the current config.json
+        # file = open("config.json", "w")
+        # file.write(json.dumps(self.remote_config))
+        # file.close()
+        # print("done!")
 
         for elem in self.get_paths(self.get_directories()):
             print(elem)
