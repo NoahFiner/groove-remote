@@ -120,9 +120,10 @@ Would you like to update? (y/n):""".format(
 
     # Helper function for getting an MD5 hash of all files and therefore determining
     # authenticity of an update	
-    get_md5(self):	
+    def get_md5(self):	
         md5 = hashlib.md5()	
         for filename in self.paths:	
+            print("Hashing "+filename)
             file = open(filename, "r")	
             while True:	
                 data = file.read(32)	

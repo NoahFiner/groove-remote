@@ -37,6 +37,7 @@ def get_paths():
 def get_md5():
     md5 = hashlib.md5()
     for filename in get_paths():
+        print("Hashing "+filename)
         file = open(filename, "r")
         while True:
             data = file.read(32)
