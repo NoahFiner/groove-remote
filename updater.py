@@ -96,7 +96,7 @@ Would you like to update? (y/n):""".format(
 
 
 def special_function():
-    print("Hello from version 1.0!")
+    print("Hello from version 1.1!")
 
 if __name__ == "__main__":
     updater = Updater()
