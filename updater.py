@@ -107,7 +107,7 @@ Would you like to update? (y/n):""".format(
 
         print("done!")
 
-        print("Checking MD5 hash with config...", end='')
+        print("Checking MD5 hash with config...")
         if(self.get_md5() == self.remote_config["hash"]):
             print("verified!")
 
@@ -132,6 +132,7 @@ Would you like to update? (y/n):""".format(
                 if not data:	
                     break	
                 md5.update(data.encode("utf-8"))	
+            file.close()
 
 
 def special_function():

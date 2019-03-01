@@ -37,13 +37,15 @@ def get_paths():
 def get_md5():
     md5 = hashlib.md5()
     for filename in get_paths():
-        print("Hashing "+filename)
-        file = open(filename, "r")
-        while True:
-            data = file.read(32)
-            if not data:
-                break
-            md5.update(data.encode("utf-8"))
+        # We can't hash generate_update.py
+        if(filename == "generate_update.py"):
+            print("Hashing "+filename)
+            file = open(filename, "r")
+            while True:
+                data = file.read(32)
+                if not data:
+                    break
+                md5.update(data.encode("utf-8"))
     return md5.hexdigest()
 
 
