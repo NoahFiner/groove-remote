@@ -38,7 +38,7 @@ def get_md5():
     md5 = hashlib.md5()
     for filename in get_paths():
         # We can't hash generate_update.py
-        if(filename == "generate_update.py"):
+        if(filename != "generate_update.py"):
             print("Hashing "+filename)
             file = open(filename, "r")
             while True:
