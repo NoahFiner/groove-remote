@@ -244,9 +244,10 @@ Would you like to update? (y/n):""".format(
         print("done!")
 
         for elem in self.get_paths(self.get_directories()):
-            print(elem)
-            r = requests.get("https://raw.githubusercontent.com/NoahFiner/groove-remote/{0}/{1}".format(self.commit, elem))
-            write_to_file(elem, r.text)
+            if elem is not "README.md":
+                print(elem)
+                r = requests.get("https://raw.githubusercontent.com/NoahFiner/groove-remote/{0}/{1}".format(self.commit, elem))
+                self.write_to_file(elem, r.text)
 
         print("Checking MD5 hash with config...", end='')
         if(self.get_md5(__file__)
