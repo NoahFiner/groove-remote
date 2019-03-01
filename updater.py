@@ -232,15 +232,15 @@ Would you like to update? (y/n):""".format(
         print("done!")
 
         # Write that to the current updater.py
-        print("Updating to "+self.remote_config["version"]+"...", end='')
-        file = open(__file__, "w")
-        file.write(r.text)
-        file.close()
+        # print("Updating to "+self.remote_config["version"]+"...", end='')
+        # file = open(__file__, "w")
+        # file.write(r.text)
+        # file.close()
 
-        # Update the current config.json
-        file = open("config.json", "w")
-        file.write(json.dumps(self.remote_config))
-        file.close()
+        # # Update the current config.json
+        # file = open("config.json", "w")
+        # file.write(json.dumps(self.remote_config))
+        # file.close()
         print("done!")
 
         for elem in self.get_paths(self.get_directories()):
@@ -280,7 +280,7 @@ Would you like to update? (y/n):""".format(
 
 
 def special_function():
-    print("Hello from version 1.0!")
+    print("Hello from version 2.0!")
 
 if __name__ == "__main__":
     updater = Updater()
