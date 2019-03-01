@@ -48,7 +48,7 @@ $ git push origin master
         repo.git.add(update=True)        
         repo.index.commit("Update to version {0}".format(config["version"]))
         print("Committed")
-        print("Pushing...", end="")
+        print("Pushing...")
         repo.git.push("origin", "master")
         print("done.")
     except:
