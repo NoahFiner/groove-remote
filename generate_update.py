@@ -38,7 +38,11 @@ def get_md5():
     md5 = hashlib.md5()
     for filename in get_paths():
         # We can't hash generate_update.py
-        if(filename != "generate_update.py" and filename != "config.json"):
+        # or README.md (it's different)
+        # or config.json (it has some other hash)
+        if(filename != "generate_update.py"
+            and filename != "config.json"
+            and filename != "README.md"):
             print("Hashing "+filename)
             file = open(filename, "r")
             while True:
