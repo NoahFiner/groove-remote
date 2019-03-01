@@ -4,7 +4,6 @@ import hashlib
 from git import Repo
 from pathlib import Path
 
-
 # Returns a list of all non-hidden, non virtualenv, file paths
 def get_paths():
     result = list()

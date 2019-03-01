@@ -125,7 +125,7 @@ Would you like to update? (y/n):""".format(
     def get_md5(self):	
         md5 = hashlib.md5()
         for filename in self.get_paths():
-            # We can't hash generate_update.py
+            # We can't hash generate_update.py, config.json, or README.md
             if(filename != "generate_update.py"
                 and filename != "config.json"
                 and filename != "README.md"):
