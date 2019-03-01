@@ -203,8 +203,10 @@ Would you like to update? (y/n):""".format(
         # Now we're good to return!
         return directories
 
-    def get_paths(self, directories):
+    def get_paths(self):
         result = list()
+        
+        directories = self.get_directories()
         # Add the current directory
         directories.append('.')
         for directory in directories:
@@ -231,23 +233,19 @@ Would you like to update? (y/n):""".format(
         r = requests.get("https://raw.githubusercontent.com/NoahFiner/groove-remote/{0}/updater.py".format(self.commit))
         print("done!")
 
-        # Write that to the current updater.py
-        # print("Updating to "+self.remote_config["version"]+"...", end='')
-        # file = open(__file__, "w")
-        # file.write(r.text)
-        # file.close()
+        print("Updating to "+self.remote_config["version"]+"...", end='')
 
-        # # Update the current config.json
-        # file = open("config.json", "w")
-        # file.write(json.dumps(self.remote_config))
-        # file.close()
-        print("done!")
-
-        for elem in self.get_paths(self.get_directories()):
+        for elem in self.get_paths():
             if elem != "README.md":
                 print(elem)
                 r = requests.get("https://raw.githubusercontent.com/NoahFiner/groove-remote/{0}/{1}".format(self.commit, elem))
-                self.write_to_file(elem, r.text)
+                if(r.status_code == 404):
+                    print("Removing "+elem)
+                    os.remove(elem)
+                else:
+                    self.write_to_file(elem, r.text)
+
+        print("done!")
 
         print("Checking MD5 hash with config...", end='')
         if(self.get_md5(__file__)
@@ -280,7 +278,7 @@ Would you like to update? (y/n):""".format(
 
 
 def special_function():
-    print("Hello from version 2.0!")
+    print("Hello from version 2.2!")
 
 if __name__ == "__main__":
     updater = Updater()
