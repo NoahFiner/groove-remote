@@ -108,8 +108,6 @@ Would you like to update? (y/n):""".format(
         print("done!")
 
         print("Checking MD5 hash with config...")
-        print(self.get_md5())
-        print(remote_config["hash"])
         if(self.get_md5() == self.remote_config["hash"]):
             print("verified!")
 
