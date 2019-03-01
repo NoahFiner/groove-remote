@@ -25,7 +25,7 @@ Please make sure your origin is set as https://github.com/NoahFiner/groove-remot
 This simply sets up config.json and also runs an equivalent of the following with GitPython:
 $ git add -A
 $ git commit -m "Update to version <new version>"
-$ git push
+$ git push origin master
     """)
 
     config["version"] = input("Input a version: ")
@@ -41,16 +41,15 @@ $ git push
     json.dump(config, file)
     file.close()
 
-    # try:
-    repo = Repo(".git")
-    print("1")
-    repo.git.add(update=True)        
-    print("2")
-    repo.index.commit("Update to version {0}".format(config["version"]))
-    print("3")
-    origin = repo.remote(name="origin")
-    print("4")
-    origin.push()
-    print("5")
-    # except:
-    #     print("Something failed with git. Try pushing manually.")
+    try:
+        print("Initializing git...", end="")
+        repo = Repo(".git")
+        print("done.")
+        repo.git.add(update=True)        
+        repo.index.commit("Update to version {0}".format(config["version"]))
+        print("Committed")
+        print("Pushing...", end="")
+        repo.git.push("origin", "master")
+        print("done.")
+    except:
+        print("Something failed with git. Try pushing manually.")
