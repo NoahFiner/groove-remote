@@ -108,6 +108,8 @@ Would you like to update? (y/n):""".format(
         print("done!")
 
         print("Checking MD5 hash with config...")
+        print(self.get_md5())
+        print(remote_config["hash"])
         if(self.get_md5() == self.remote_config["hash"]):
             print("verified!")
 
@@ -126,7 +128,7 @@ Would you like to update? (y/n):""".format(
         md5 = hashlib.md5()
         for filename in self.paths:
             # We can't hash generate_update.py
-            if(filename != "generate_update.py"):
+            if(filename != "generate_update.py" and filename != "config.json"):
                 print("Hashing "+filename)
                 file = open(filename, "r")
                 while True:
