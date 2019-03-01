@@ -26,10 +26,6 @@ $ git push origin master
 This program assumes you've already written a new program to update.py
 AND that there is a repository in the current directory.
 
-Please make sure to run
-$ git remote add origin https://github.com/NoahFiner/groove-remote.git
-at least once before this script
-
 Also, THIS WAS DONE FOR TIME'S SAKE! -- DO NOT USE IN PRODUCTION!
 Ideally, we would be using a server that's not literally just raw github.
 But so I could focus on code instead of writing a server for just getting
