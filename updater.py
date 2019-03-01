@@ -94,15 +94,13 @@ Would you like to update? (y/n):""".format(
 
 
 def special_function():
-    print("Hello from version 1.1!")
+    print("Hello from version 1.2!")
 
 if __name__ == "__main__":
     updater = Updater()
 
-    print("Running updater with version {0}".format(
-                                            updater.local_config["version"]))
     if(updater.should_run_current_version()):
-        print("Running groove_program module version {0}".format(
+        print("Running with version {0}".format(
                                             updater.local_config["version"]))
         
         special_function()

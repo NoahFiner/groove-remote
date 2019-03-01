@@ -1,6 +1,7 @@
 import json
 import time
 import hashlib
+from git import Repo
 
 def get_md5(filename):
     md5 = hashlib.md5()
@@ -16,9 +17,15 @@ def get_md5(filename):
 if(__name__ == "__main__"):
     config = dict()
     print("""HOW TO USE:
-This program assumes you've already written a new program to update.py.
-This simply sets up config.json.
-You are responsible for pushing this release to https://github.com/NoahFiner/groove-remote.git.
+This program assumes you've already written a new program to update.py
+AND that there is a repository in the current directory.
+
+Please make sure your origin is set as https://github.com/NoahFiner/groove-remote.git
+
+This simply sets up config.json and also runs an equivalent of the following with GitPython:
+$ git add -A
+$ git commit -m "Update to version <new version>"
+$ git push
     """)
 
     config["version"] = input("Input a version: ")
@@ -33,3 +40,17 @@ You are responsible for pushing this release to https://github.com/NoahFiner/gro
     file = open("config.json", "w")
     json.dump(config, file)
     file.close()
+
+    # try:
+    repo = Repo(".git")
+    print("1")
+    repo.git.add(update=True)        
+    print("2")
+    repo.index.commit("Update to version {0}".format(config["version"]))
+    print("3")
+    origin = repo.remote(name="origin")
+    print("4")
+    origin.push()
+    print("5")
+    # except:
+    #     print("Something failed with git. Try pushing manually.")
