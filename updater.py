@@ -79,8 +79,6 @@ Would you like to update? (y/n):""".format(
             files = list(filter(lambda x: x[0] != '.', files))
             # Now append
             result.extend(files)
-
-        self.paths = result
         return result
 
     # Write text to the file named filename
@@ -122,9 +120,11 @@ Would you like to update? (y/n):""".format(
 
     # Helper function for getting an MD5 hash of all files and therefore determining
     # authenticity of an update	
+
+    # We need to run get_paths again in case a file is deleted
     def get_md5(self):	
         md5 = hashlib.md5()
-        for filename in self.paths:
+        for filename in self.get_paths():
             # We can't hash generate_update.py
             if(filename != "generate_update.py"
                 and filename != "config.json"
