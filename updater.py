@@ -79,6 +79,8 @@ Would you like to update? (y/n):""".format(
             files = list(filter(lambda x: x[0] != '.', files))
             # Now append
             result.extend(files)
+
+        self.paths = result
         return result
 
     # Write text to the file named filename
