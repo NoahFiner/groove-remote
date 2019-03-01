@@ -23,6 +23,9 @@ $ git add .
 $ git commit -m "Update to version <new version>"
 $ git push origin master
 
+SHORTCOMING: If you add a new file to here, you'll need to make sure to git
+add it prior to running this script.
+
 This program assumes you've already written a new program to update.py
 AND that there is a repository in the current directory.
 

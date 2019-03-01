@@ -2,6 +2,8 @@ from importlib import reload
 import json
 import requests
 import hashlib
+import os
+import sys
 from pathlib import Path
 
 class Updater:
@@ -108,17 +110,13 @@ Would you like to update? (y/n):""".format(
             self.write_to_file(elem, r.text)
 
         print("Checking MD5 hash with config...", end='')
-        if(self.get_md5(__file__)
-                                        == self.remote_config["hash"]):
+        if(self.get_md5(__file__) == self.remote_config["hash"]):
             print("verified!")
 
             print("Restarting the updater...\n\n")
             
             # Restart the program
-            import os
-            import sys
             os.execv(sys.executable, ['python', __file__])
-            # os.execl(sys.executable, os.path.abspath(__file__), *sys.argv)
         else:
             print("UNVERIFIED! Program might be dangerous to run.")
             print("Please use generate_update.py to generate a valid hash")
@@ -189,7 +187,10 @@ Would you like to update? (y/n):""".format(
             print("Up to date!")
             return True
 
-    def get_directories(self):
+    # Returns a list of all non-hidden, non virtualenv, file paths
+    def get_paths(self):
+        result = list()
+
         p = Path('.')
         # Create a list of all directories
         directories = list(p.glob("**"))
@@ -200,14 +201,7 @@ Would you like to update? (y/n):""".format(
         directories = list(filter(lambda x: x[0] != '.' and x[0:3] != 'env',
                                                     directories))
 
-        # Now we're good to return!
-        return directories
-
-    def get_paths(self):
-        result = list()
-        
-        directories = self.get_directories()
-        # Add the current directory
+        # Add the current directory to directories
         directories.append('.')
         for directory in directories:
             p = Path(directory)
@@ -221,20 +215,18 @@ Would you like to update? (y/n):""".format(
             result.extend(files)
         return result
 
+    # Write text to the file named filename
     def write_to_file(self, filename, text):
         file = open(filename, "w")
         file.write(text)
         file.close()
 
-    # Updates the module 
     def update(self):
-        # Fetch the updated updater.py from GitHub
-        print("Fetching version "+self.remote_config["version"]+"...", end='')
-        r = requests.get("https://raw.githubusercontent.com/NoahFiner/groove-remote/{0}/updater.py".format(self.commit))
-        print("done!")
-
         print("Updating to "+self.remote_config["version"]+"...", end='')
 
+        # Iterate through all file paths and update their content with updated
+        # content from the repo. Delete the file if the repo returns a 404.
+        import os
         for elem in self.get_paths():
             if elem != "README.md":
                 print(elem)
@@ -278,7 +270,7 @@ Would you like to update? (y/n):""".format(
 
 
 def special_function():
-    print("Hello from version 2.2!")
+    print("Hello from version 2.5!")
 
 if __name__ == "__main__":
     updater = Updater()
